@@ -19,6 +19,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
 public:
 	UPROPERTY(EditAnywhere)
@@ -40,4 +41,7 @@ public:
 	void Unragdoll();
 	UFUNCTION()
 	void Respawn();
+	
+	UFUNCTION()
+	void OnFire();
 };

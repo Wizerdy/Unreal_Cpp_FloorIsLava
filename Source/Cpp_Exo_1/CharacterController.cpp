@@ -5,6 +5,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "DecalsBullet.h"
 
 ACharacterController::ACharacterController() {
 
@@ -71,4 +72,16 @@ void ACharacterController::Unragdoll() {
 	mesh->SetRelativeRotation(FRotator(0.f, 270.f, 0.f));
 
 	GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
+}
+
+void ACharacterController::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) {
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ACharacterController::OnFire);
+}
+
+void ACharacterController::OnFire() {
+	UE_LOG(LogTemp, Warning, TEXT("FIIIIIIRE !"));
+	FVector pos = GetActorLocation();
+	FVector forward = GetActorForwardVector();
+	GetWorld()->SpawnActor<ADecalsBullet>(pos + forward * 100.f, forward.Rotation());
 }
